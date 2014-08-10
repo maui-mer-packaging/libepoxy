@@ -1,0 +1,45 @@
+Name        : libepoxy
+Version     : 1.2
+Release     : 1
+Group       : System/Libraries
+License     : MIT
+Summary     : Direct Rendering Manager runtime library
+Description : |
+  A library for handling OpenGL function pointer management.
+URL         : https://github.com/anholt/libepoxy
+Sources     :
+    - "%{name}-%{version}.tar.xz"
+SetupOptions: -q -n %{name}-%{version}/upstream
+
+PkgBR:
+    - pkg-config
+    - automake
+    - autoconf
+    - libtool
+    - libGL-devel
+    - libEGL-devel
+PkgConfigBR:
+    - xorg-macros
+    - python3
+
+Configure: reconfigure
+ConfigOptions:
+    - --disable-silent-rules
+
+Files:
+    - "%doc README.md"
+    - "%{_libdir}/libepoxy.so.0"
+    - "%{_libdir}/libepoxy.so.0.0.0"
+
+SubPackages:
+    - Name: devel
+      Summary: Development files for libepoxy
+      Group: Development/Libraries
+      Description: |
+        This package contains libraries and header files for
+        developing applications that use %{name}.
+      Files:
+         - "%dir %{_includedir}/epoxy/"
+         - "%{_includedir}/epoxy/*"
+         - "%{_libdir}/libepoxy.so"
+         - "%{_libdir}/pkgconfig/epoxy.pc"
